@@ -1,0 +1,54 @@
+{
+  "name": "express-startup-kit",
+  "version": "1.0.0",
+  "description": "Express API Server Startup Kit",
+  "main": "dist/server.js",
+  "author": "Osman",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=16.0.0",
+    "yarn": ">=1.22.0",
+    "npm": "please-use-yarn"
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc -p .",
+    "format": "prettier --write \"src/*.ts\"",
+    "prepare": "npx husky install",
+    "migrate": "npx prisma migrate dev --name init && npx prisma generate",
+    "start": "ts-node --transpileOnly src/server.ts",
+    "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start:migrate:dev": "yarn migrate && yarn start:dev",
+    "start:prod": "yarn build && node dist/server.js",
+    "start:migrate:prod": "npx prisma migrate deploy && npx prisma generate && yarn start:prod",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.7.1",
+    "express": "^4.18.2",
+    "prisma": "^4.7.1",
+    "ts-node": "^10.9.1",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.2",
+    "jest": "^29.3.1",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.3"
+  }
+}
